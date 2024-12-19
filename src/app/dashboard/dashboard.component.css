@@ -1,0 +1,29 @@
+
+.title{
+    font-size: 45px;
+    line-height: 58px;
+    margin-bottom: 24px;
+}
+.dashboard{
+    margin: 64px 48px;
+}
+.trends-box{
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    width: 270px;
+    margin-right: 16px;
+}
+.key-metrics{
+    color: #0070AD;
+    font-size: 45px;
+    line-height: 57px;
+    align-items: bottom;
+    margin-bottom: 20px;
+}
+.key-headers{
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    margin-top: 16px;
+}

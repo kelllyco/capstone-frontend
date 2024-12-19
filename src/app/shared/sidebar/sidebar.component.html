@@ -1,0 +1,25 @@
+<div class="d-flex">
+   <div class="sidebar min-vh-100 d-flex flex-column align-items-center">
+        <div class="logo-margin">
+            <img src="../../../assets/svg/capgemini.svg">
+        </div>
+
+        <div class="clickable d-flex flex-column align-items-center buttons-margin" (click)="navDashboard()">
+            <fa-icon class="icon fa-xl" [icon]="house"></fa-icon>
+            <p class="icon-label">Dashboard</p>
+        </div>
+
+        <div class="clickable d-flex flex-column align-items-center buttons-margin" (click)="clickChatbot()">
+            <fa-icon class="icon fa-xl" [icon]="comment" [ngClass]="{'active-icon': openChatbot}"></fa-icon>
+            <p class="icon-label">ConstructAI</p>
+        </div>
+
+        <div class="clickable d-flex flex-column align-items-center buttons-margin" (click)="navLogout()">
+            <fa-icon class="icon fa-xl" [icon]="logout"></fa-icon>
+            <p class="icon-label">Logout</p>
+        </div>
+
+
+    </div>
+    <app-chatbot *ngIf="openChatbot" class="min-vh-100"></app-chatbot>
+</div>

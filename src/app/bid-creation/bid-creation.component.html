@@ -1,0 +1,97 @@
+<div class="dashboard">
+    <h1 class="title">Bid Creation</h1>
+    <div class="d-flex flex-column" style="max-width: 1200px;">
+        <p style="font-size: 14px;">Fill out all required fields with information about the project and its scope. Verify information is accurate to ensure precise bid creation. Once complete, select ‘Generate Bid’ to receive a fully modifiable bid tailored to the project.</p>
+        <form class="d-flex flex-row" [formGroup]="bidCreationForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column flex-fill section">
+                <div class="section-header">
+                    <h3 class="section-header-text">Project Overview</h3>
+                    <hr class="section-header-hr">
+                </div>
+                <mat-form-field class="text-input">
+                    <mat-label>Project Name</mat-label>
+                    <input matInput type="text" class="form-control" id="project-name" formControlName="projectName">
+                </mat-form-field>
+                <mat-form-field class="text-input long-text-input">
+                    <mat-label>Project Description</mat-label>
+                    <textarea matInput type="text" class="form-control" id="project-name" style="min-height: 128px;" formControlName="projectDescription"></textarea>
+                </mat-form-field>
+                <div class="section-header">
+                    <h3 class="section-header-text">Client Information</h3>
+                    <hr class="section-header-hr">
+                </div>
+                <div class="d-flex flex-row">
+                    <mat-form-field class="text-input">
+                        <mat-label>Client Name</mat-label>
+                        <input matInput type="text" class="form-control" id="client-name" formControlName="clientName">
+                    </mat-form-field>
+                    <mat-form-field class="text-input">
+                        <mat-label>Client Email</mat-label>
+                        <input matInput type="email" class="form-control" id="client-email" formControlName="clientEmail">
+                    </mat-form-field>
+                </div>
+                <div class="section-header">
+                    <h3 class="section-header-text">Project Details</h3>
+                    <hr class="section-header-hr">
+                </div>
+                <div class="d-flex flex-row">
+                    <mat-form-field class="text-input">
+                        <mat-label>Project Start Date</mat-label>
+                        <input matInput type="text" class="form-control" id="project-start-date" placeholder="mm/dd/yyyy" formControlName="startDate">
+                    </mat-form-field>
+                    <mat-form-field class="text-input">
+                        <mat-label>Project End Date</mat-label>
+                        <input matInput type="text" class="form-control" id="project-end-date" placeholder="mm/dd/yyyy" formControlName="endDate">
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-row">
+                    <mat-form-field class="text-input">
+                        <mat-label>Square Footage</mat-label>
+                        <input matInput type="text" class="form-control" id="square-footage" formControlName="sqft">                    </mat-form-field>
+                    <mat-form-field class="text-input">
+                        <mat-label>Complexity</mat-label>
+                        <input matInput type="number" class="form-control" id="complexity" min="1" max="10" formControlName="complexity">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-fill section">
+                <div class="section-header">
+                    <h3 class="section-header-text">Project Location</h3>
+                    <hr class="section-header-hr">
+                </div>
+                <div class="d-flex flex-row">
+                    <mat-form-field class="text-input">
+                        <mat-label>Street Address</mat-label>
+                        <input matInput type="text" class="form-control" id="address-line-1" formControlName="addrLine1">
+                    </mat-form-field>
+                    <mat-form-field class="text-input">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" class="form-control" id="city" formControlName="city">
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-row">
+                    <mat-form-field class="text-input">
+                        <mat-label>State</mat-label>
+                        <input matInput type="text" class="form-control" id="state" formControlName="state">
+                    </mat-form-field>
+                    <mat-form-field class="text-input">
+                        <mat-label>Zipcode</mat-label>
+                        <input matInput type="text" class="form-control" id="zip-code" placeholder="XXXXX" formControlName="zip">
+                    </mat-form-field>
+                </div>
+                <div class="section-header">
+                    <h3 class="section-header-text">Project Type</h3>
+                    <hr class="section-header-hr">
+                </div>
+                <mat-radio-group class="d-flex flex-column" formControlName="projectType">
+                    <mat-radio-button value="Custom">Custom Build</mat-radio-button>
+                    <mat-radio-button value="Template">Template Build</mat-radio-button>
+                </mat-radio-group>
+
+            </div> 
+            <div class="d-flex flex-column flex-fill justify-content-end align-items-end">
+                <button type="submit" [disabled]="!bidCreationForm.valid" class="btn btn-primary generate-btn">Generate Bid</button>
+            </div>
+        </form>
+    </div>
+</div>

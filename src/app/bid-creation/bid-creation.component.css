@@ -1,0 +1,40 @@
+.title{
+    font-size: 45px;
+    line-height: 58px;
+    /* letter-spacing: -0.25px; */
+    color: #1b1b1b;
+}
+.dashboard{
+    margin: 64px 48px;
+}
+
+.text-input{
+    padding-right: 24px;
+    max-width: 250px;
+}
+
+.long-text-input{
+    max-width: 400px !important;
+}
+
+.section-header-text{
+    font-size: 22px;
+    line-height: 30px;
+    color: #49454F;
+    margin-bottom: 4px;
+    margin-top: 12px;
+}
+
+.hint{
+    padding: 0px !important;
+}
+
+.section-header-hr{
+    margin: 0px 0px 12px;
+    max-width: 240px;
+}
+
+.generate-btn {
+    width: fit-content;
+    height: fit-content;
+}

@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$primary: #0070AD;
+$theme-colors: (
+    "primary": $primary,
+    "secondary": #49454F,
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+
+$primary-palette: mat.define-palette(mat.$indigo-palette, 500);
+$accent-palette: mat.define-palette(mat.$blue-palette, 700);
+$warn-palette: mat.define-palette(mat.$red-palette);
+
+// Create the theme object
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $primary-palette,
+    accent: $accent-palette,
+    warn: $warn-palette,
+  ),
+  typography: mat.define-typography-config(),
+));
+
+// Include Angular Material styles for your custom theme
+@include mat.all-component-themes($custom-theme);

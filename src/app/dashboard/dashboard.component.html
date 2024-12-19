@@ -1,0 +1,20 @@
+<div class="dashboard">
+    <h1 class="title">Dashboard</h1>
+    <div class="d-flex flex-row justify-content-between" style="max-width: 1050px;">
+        <div class="px-3 trends-box">
+            <div class="key-headers">Deviating Projects</div>
+            <div class="key-metrics">{{numHighRiskOverruns() | async }}</div>
+        </div>
+        <div class="px-3 trends-box">
+            <div class="key-headers">Projects Past Due</div>
+            <div class="key-metrics">{{numLateProjects() | async}}</div>
+        </div>
+        <div class="px-3 trends-box">
+            <div class="key-headers">Open Projects</div>
+            <div class="key-metrics">{{numOpenProjects() | async}}</div>
+        </div>
+    </div>
+    <div class="d-flex flex-column">
+        <app-projects-table [inProjectPreviews]="project_previews$ | async" (createProjectClick)="navCreateProject()" (refreshProjectsClick)="refreshProjectPreviews()" (projectClick)="navProject($event)"></app-projects-table>
+    </div>  
+</div>

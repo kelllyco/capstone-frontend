@@ -1,0 +1,68 @@
+<div class="table-title">Projects</div>
+<div class="d-flex flex-row align-items-center justify-content-between pb-3">
+    <input type="text" (keyup)="applyFilter($event)" #input class="form-control search" placeholder="Search projects">
+    <div class="px-3 d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary new-bid-btn" (click)="onRefreshClick()">Refresh Projects</button>
+        <button type="button" class="btn btn-primary new-bid-btn" (click)="onCreateClick()">Create Project</button>
+    </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort>
+    <!-- project no col -->
+    <ng-container matColumnDef="Project Number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Project No. </th>
+        <td mat-cell *matCellDef="let project"> {{ project["Project Number"] }} </td>
+    </ng-container>
+
+    <!-- project name col -->
+    <ng-container matColumnDef="Project Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Name </th>
+        <td mat-cell *matCellDef="let project"> {{ project["Project Name"] }} </td>
+    </ng-container>
+
+    <!-- risk of overrun col -->
+    <ng-container matColumnDef="Risk of Overrun">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Deviation from Expected </th>
+        <td mat-cell *matCellDef="let project">
+            <div *ngIf="project['Status'] === 'Tracking' && project['Risk of Overrun'] >= 5">At Risk<fa-icon class="warning fa-sm" [icon]="exclamation"></fa-icon></div>
+            <div *ngIf="project['Status'] === 'Tracking' && project['Risk of Overrun'] < 5">As Expected</div>
+            <div *ngIf="project['Status'] != 'Tracking'">Not Applicable</div>
+        </td>
+    </ng-container>
+    
+    <!-- cost col -->
+    <ng-container matColumnDef="Cost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost </th>
+        <td mat-cell *matCellDef="let project"> {{ project["Cost"] | currency: 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
+
+    <!-- date due col -->
+    <ng-container matColumnDef="Date Due">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Due </th>
+        <td mat-cell *matCellDef="let project">
+             {{ project["Date Due"] | date: 'M/d/yyyy' }} 
+             <fa-icon class="warning fa-sm" *ngIf="project['Date Due'] < today && project['Status'] != 'Complete'" [icon]="exclamation"></fa-icon>
+        </td>
+    </ng-container>
+
+    <!-- zipcode col -->
+    <ng-container matColumnDef="Zip Code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Zipcode </th>
+        <td mat-cell *matCellDef="let project"> {{ project["Zip Code"] }} </td>
+    </ng-container>
+
+    <!-- status col -->
+    <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let project"> {{ project["Status"] }} </td>
+    </ng-container>
+
+    <!-- columns to display -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)" class="element-row" [ngClass]="{'clickable': row.Status != 'Complete'}"></tr>
+
+    <!-- no data message -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="7">No projects found</td></tr>
+</table>
+<mat-paginator [pageSize]="7" aria-label="Select page of projects"></mat-paginator>

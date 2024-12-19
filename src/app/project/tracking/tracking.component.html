@@ -1,0 +1,98 @@
+<div class="d-flex flex-columns">
+    <div class="dashboard">
+        <h1 class="title">Project Tracking: {{ projectOverview["Project Name"] }}</h1>
+        <p style="font-size: 14px;">Use the below data to monitor the total price of the selected project. Select “Development Complete” to improve future bid generation.</p>
+        <div class="modification-page-content d-flex">
+            <div class="left-col d-flex flex-column">
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Client Information
+                        <hr class="divider">
+                    </div>
+                    <p class="description">{{projectOverview['Client Name']}}<br>{{projectOverview['Client Email']}}</p>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Address
+                        <hr class="divider">
+                    </div>
+                    <p class="description">{{ projectOverview['Address Line 1'] }}<br>{{ projectOverview.City }}, {{ projectOverview.State }} {{ projectOverview['Zip Code'] }}</p>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Details
+                        <hr class="divider">
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Square Feet</div>
+                        <div class="value">{{ projectOverview['Square Feet'] | number:'1.0':'en-US' }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Complexity</div>
+                        <div class="value">{{ projectOverview['Complexity'] }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Start Date</div>
+                        <div class="value">{{ projectOverview['Start Date'] | date: 'M/d/yyyy' }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">End Date</div>
+                        <div class="value">{{ projectOverview['Date Due'] | date: 'M/d/yyyy' }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Build Type</div>
+                        <div class="value">{{ projectOverview['Project Type'] }}</div>
+                    </div>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Margins
+                        <hr class="divider">
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Profit</div>
+                        <div class="value">{{ projectOverview.Profit| percent }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Overhead</div>
+                        <div class="value">{{ projectOverview.Overhead| percent }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col d-flex flex-column flex-fill">
+                <div>
+                    <canvas id="lineChart"></canvas>
+                  </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Description
+                        <hr class="divider">
+                    </div>
+                    <p class="description">{{projectOverview['Project Description']}}</p>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Upload Additional Data
+                        <hr class="divider">
+                    </div>
+                    <p class="description" style="font-size: 14px;">Upload a CSV file exported from your accounting software (e.g., QuickBooks) containing all spending categories for the selected project to date. This will update your project's spending visualization and generate new warnings if potential overages are detected.</p>
+                    <div class="file-upload d-flex gap-2">
+                        <input class="form-control flex-fill" type="file" id="formFile" accept=".csv" (change)="onFileSelected($event)">
+                        <input class="form-control" type="date" id="formDate" [attr.min]="startDate" (change)="onDateInput($event)">
+                        <button class="btn btn-outline-secondary btn-sm" (click)="onFileSubmission()" [disabled]="!this.file || !this.date">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-row d-flex justify-content-between align-items-center">
+            <div class="dark-button-text" (click)="navDashboard()">
+                Exit to Dashboard
+            </div>
+            <div class="d-flex right-btns">
+                <button class="btn btn-primary" (click)="completeProject()">Complete Project</button>
+            </div>
+        </div>
+    </div>
+    <app-totals class="flex-fill"></app-totals>
+</div>
+

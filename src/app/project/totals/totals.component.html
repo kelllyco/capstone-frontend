@@ -1,0 +1,64 @@
+<div *ngIf="(projectStatus$ | async) === 'Modification'" class="totals min-vh-100 d-flex flex-column">
+    <div class="two-cat-table">
+        <div class="totals-heading">
+             Subtotal
+        </div>
+        <div *ngFor="let categories of projectDetails$ | async | keyvalue" class="d-flex two-cat-table-row">
+            <div class="label">{{categories.key}}</div>
+            <div class="value">{{categories.value.sum | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+        <hr class="divider">
+        <div class="last-row d-flex justify-content-between">
+            <div class="last-label">Subtotal</div>
+            <div class="last-value">{{ projectSubtotal$ | async | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+    </div>
+    <div class="two-cat-table">
+        <div class="totals-heading">Totals</div>
+        <div class="two-cat-table-row d-flex justify-content-between">
+            <div class="label">Subtotal</div>
+            <div class="value">{{ projectSubtotal$ | async | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+        <div class="two-cat-table-row d-flex justify-content-between">
+            <div class="label">Profit</div>
+            <div class="value">{{ projectProfit$ | async | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+        <div class="two-cat-table-row d-flex justify-content-between">
+            <div class="label">Overhead</div>
+            <div class="value">{{ projectOverhead$ | async | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+        <hr class="divider">
+        <div class="last-row d-flex justify-content-between">
+            <div class="last-label">Total</div>
+            <div class="last-value">{{ projectTotal$ | async | currency:'USD':"symbol":'.0-0'}}</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="(projectStatus$ | async) === 'Tracking'" class="totals min-vh-100 d-flex flex-column">
+    <div class="two-cat-table">
+        <div class="totals-heading">
+            Current Spending
+        </div>
+        <p style="font-size: 13px;">Spending marked with a yellow exclamation is below expected levels for this stage of the project, while spending with a red icon is above expectations.</p>
+        <div *ngFor="let categories of projectDetails$ | async | keyvalue" class="d-flex two-cat-table-row">
+            <div class="label">{{categories.key}}</div>
+            <div class="val-and-warning d-flex align-items-center">
+                <fa-icon *ngIf="((risks$ | async)?.[formatCategories(categories.key)] ?? 0) <= -5" class="warning fa-sm" [icon]="warning"></fa-icon>
+                <fa-icon *ngIf="((risks$ | async)?.[formatCategories(categories.key)] ?? 0) >= 5" class="under fa-sm" [icon]="warning"></fa-icon>
+                <div class="value d-flex">
+                    <div *ngIf="(projectSpending$ | async)?.[formatCategories(categories.key)] === undefined" style="margin-right: 3px;">{{ 0 | currency:'USD':"symbol":'.0-0' }}</div>
+                    {{(projectSpending$ | async )?.[formatCategories(categories.key)] | currency:'USD':"symbol":'.0-0'}} of {{categories.value.sum | currency:'USD':"symbol":'.0-0'}} spent
+                </div>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="last-row d-flex justify-content-between">
+            <div class="last-label">Total</div>
+            <div class="val-and-warning d-flex align-items-center">
+                <fa-icon *ngIf="((risks$ | async)?.['Overall'] ?? 0) <= -5" class="warning" [icon]="warning"></fa-icon>
+                <fa-icon *ngIf="((risks$ | async)?.['Overall'] ?? 0) >= 5" class="under fa-sm" [icon]="warning"></fa-icon>
+                <div class="last-value">{{ (overallSpending$ | async) | currency:'USD':"symbol":'.0-0' }} of {{  projectTotal$ | async | currency:'USD':"symbol":'.0-0'}} spent</div>
+            </div>
+        </div>
+    </div>

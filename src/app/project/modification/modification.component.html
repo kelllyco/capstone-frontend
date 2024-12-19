@@ -1,0 +1,99 @@
+<div class="d-flex flex-columns">
+    <div class="dashboard">
+        <h1 class="title">Bid Modification: {{projectOverview['Project Name']}}</h1>
+        <p style="font-size: 14px;">Click any itemized spending value to modify the bid, and observe the associated changes in the totals sections. Save and exit as many times as needed, and finalize the bid once modifications are complete. </p>
+        <div class="modification-page-content d-flex">
+            <div class="left-col">
+                <div class="two-cat-table-heading">
+                    Itemized Spending
+                    <hr class="divider">
+                </div>
+                <div class="itemized-table d-flex">
+                    <div class="filter-col d-flex flex-column">
+                        <div *ngFor="let categories of projectDetails | keyvalue : keepOriginalOrder" class="filters">
+                            <input type="checkbox" [checked]="updateAllUnclicked()"[(ngModel)]="categories.value.clicked">{{ categories.key }}
+                        </div>
+                    </div>
+                    <div class="itemized-col overflow-auto">
+                        <div *ngFor="let categories of projectDetails | keyvalue : keepOriginalOrder">
+                            <div *ngIf="categories.value.clicked || allUnclicked">
+                                <div *ngFor="let feature of categories.value.features | keyvalue">
+                                    <div *ngIf="feature.value !== null && feature.value !== undefined" class="two-cat-table-row d-flex justify-content-between">
+                                        <div class="label">{{ feature.key }}</div>
+                                        <app-editable-value [type]="types[0]" [value]="feature.value" (valueChange)="editFeatureValue(categories.key, feature.key, $event)"></app-editable-value>                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col d-flex flex-column">
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Address
+                        <hr class="divider">
+                    </div>
+                    <p class="description">{{ projectOverview['Address Line 1'] }}<br>{{ projectOverview.City }}, {{ projectOverview.State }} {{ projectOverview['Zip Code'] }}</p>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Details
+                        <hr class="divider">
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Square Feet</div>
+                        <div class="value">{{ projectOverview['Square Feet'] }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Complexity</div>
+                        <div class="value">{{ projectOverview['Complexity'] }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Start Date</div>
+                        <div class="value">{{ projectOverview['Start Date'] | date: 'M/d/yyyy' }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">End Date</div>
+                        <div class="value">{{ projectOverview['Date Due'] | date: 'M/d/yyyy' }}</div>
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Build Type</div>
+                        <div class="value">{{ projectOverview['Project Type'] }}</div>
+                    </div>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Margins
+                        <hr class="divider">
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Profit</div>
+                        <app-editable-value [type]="types[1]" [value]="projectOverview.Profit" (valueChange)="editOverviewValue('Profit', $event)"></app-editable-value>                                   
+                    </div>
+                    <div class="two-cat-table-row d-flex justify-content-between">
+                        <div class="label">Overhead</div>
+                        <app-editable-value [type]="types[1]" [value]="projectOverview.Overhead" (valueChange)="editOverviewValue('Overhead', $event)"></app-editable-value>                                   
+                    </div>
+                </div>
+                <div class="two-cat-table">
+                    <div class="two-cat-table-heading">
+                        Description
+                        <hr class="divider">
+                    </div>
+                    <p class="description">{{projectOverview['Project Description']}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-row d-flex justify-content-between align-items-center">
+            <div class="dark-button-text" (click)="navDashboard()">
+                Exit to Dashboard
+            </div>
+            <div class="d-flex right-btns">
+                <button class="btn btn-outline-secondary" (click)="saveAndExit()">Save and Exit</button>
+                <button class="btn btn-primary" (click)="finalizeBid()">Finalize Bid</button>
+            </div>
+        </div>
+    </div>
+    <app-totals class="flex-fill"></app-totals>
+</div>
+

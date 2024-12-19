@@ -1,0 +1,5 @@
+<div>
+    <span *ngIf="!isEditing && type==='currency'" (click)="enableEditing()" class="value">{{ value | currency:'USD':"symbol":'.0-0' }}</span>
+    <span *ngIf="!isEditing && type==='percent'" (click)="enableEditing()" class="value">{{ value | percent }}</span>
+    <input *ngIf="isEditing" class="form-control" type="number" [(ngModel)]="editValue" #editInput (blur)="saveValue()" (keydown.enter)="saveValue()"/>
+</div>
